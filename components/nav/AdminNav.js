@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
+//install npm i  @react-hook/window-size. 
+import { useWindowWidth } from "@react-hook/window-size";
 //component names from ant-design.
 import {
   PieChartOutlined,
@@ -22,16 +24,32 @@ const AdminNav = () => {
   // state
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState("");
+  // hooks
+  const onlyWidth = useWindowWidth();
 
   //verify that in client browser.
+  //If process browser is set to current run this code...
   useEffect(() => {
     process.browser && setCurrent(window.location.pathname);
   }, [process.browser && window.location.pathname]);
 
+  useEffect(() => {
+    if (onlyWidth < 800) {
+      setCollapsed(true);
+    } else if (onlyWidth > 800) {
+      setCollapsed(false);
+    }
+  }, [onlyWidth < 800]);
+
   const activeName = (name) => `${current === name && "active"}`;
+  
 
   return (
-    <Sider collapsible>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={() => setCollapsed(!collapsed)}
+    >
       <Menu
         // defaultSelectedKeys={["1"]}
         defaultOpenKeys={["2", "6", "10"]}
