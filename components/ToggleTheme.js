@@ -1,7 +1,7 @@
 //access theme context with React hook.
 import { useContext } from "react";
 import { ThemeContext } from "../context/theme";
-import Head from "next/head";
+import Head from "next/head"; //component that imports css link into Head from next.js.
 //add functionality to ToggleTheme...
 //no need to import React, Next.js does by default.
 const ToggleTheme = () => {
@@ -13,7 +13,7 @@ const ToggleTheme = () => {
     return (
     <>
     <Head>
-        <link rel= "stylesheet" href= {`/css/${theme}.css`} />
+        <link rel= "stylesheet" href= {`/css/${theme}.css`} /> 
     </Head>
         {theme === "light" ? (
           <span 

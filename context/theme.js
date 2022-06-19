@@ -1,23 +1,23 @@
-//global state in component: 
-//import hooks
+
+
 import { useEffect, useState, createContext } from "react";
 
 const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("light");
 
-    useEffect(() => {
-        if (localStorage.getItem("theme")) {
-            setTheme (localStorage.getItem("theme"));
-        }
-    }, []);
-               //provide value
-    return (
-      <ThemeContext.Provider value= {[theme, setTheme]}>
-        {children}
-      </ThemeContext.Provider>
-    );
+  useEffect(() => {
+    if (localStorage.getItem("theme")) {
+      setTheme(localStorage.getItem("theme"));
+    }
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={[theme, setTheme]}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
 
 export { ThemeContext, ThemeProvider };

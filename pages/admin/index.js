@@ -1,9 +1,9 @@
-function Admin () {
+function MyApp({ Component, pageProps }) {
     return (
-        <div>
-            <h1>Admin Page</h1>
-        </div>
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
     );
-}
-
-export default Admin;
+  }
+  
+  export default MyApp;
