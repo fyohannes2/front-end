@@ -1,10 +1,16 @@
+//send users name, email, password to the back-end and server will  save user information the database.
+//ant design - font/form
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import axios from "axios";
+import toast from "react-hot-toast";
 
+
+//send the values to server...
 function Signup() {
   const onFinish = (values) => {
-    console.log("values => ", values);
+    //console.log("values => ", values);
   };
 
   return (
