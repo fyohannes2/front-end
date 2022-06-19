@@ -1,15 +1,14 @@
 import { Layout } from "antd";
-//import AdminLayout from "../../components/layout/AdminNav";
 import AdminNav from "../nav/AdminNav";
 
 const { Content } = Layout;
 
-function AdminLayout ({ children }) {
+function AdminLayout({ children }) {
   return (
     <Layout>
-        <AdminNav />
+      <AdminNav />
       <Layout>
-        <Content>{children}</Content>
+        <Content style={{ padding: "10px" }}>{children}</Content>
       </Layout>
     </Layout>
   );

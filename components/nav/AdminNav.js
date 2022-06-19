@@ -1,10 +1,7 @@
-//useEffect hook 
 import React, { useState, useEffect } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
-//install npm i  @react-hook/window-size. 
 import { useWindowWidth } from "@react-hook/window-size";
-//component names from ant-design.
 import {
   PieChartOutlined,
   MailOutlined,
@@ -27,8 +24,6 @@ const AdminNav = () => {
   // hooks
   const onlyWidth = useWindowWidth();
 
-  //verify that in client browser.
-  //If process browser is set to current run this code...
   useEffect(() => {
     process.browser && setCurrent(window.location.pathname);
   }, [process.browser && window.location.pathname]);
@@ -42,7 +37,6 @@ const AdminNav = () => {
   }, [onlyWidth < 800]);
 
   const activeName = (name) => `${current === name && "active"}`;
-  
 
   return (
     <Sider
