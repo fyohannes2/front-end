@@ -1,11 +1,13 @@
 import { Layout } from "antd";
+//import AdminLayout from "../../components/layout/AdminNav";
+import AdminNav from "../nav/AdminNav";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
-function AdminLayout({ children }) {
+function AdminLayout ({ children }) {
   return (
     <Layout>
-      <Sider>Sider</Sider>
+        <AdminNav />
       <Layout>
         <Content>{children}</Content>
       </Layout>
