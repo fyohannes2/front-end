@@ -1,16 +1,35 @@
 //send users name, email, password to the back-end and server will  save user information the database.
 //ant design - font/form
+import { useState } from "react";
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-
-//send the values to server...
 function Signup() {
-  const onFinish = (values) => {
-    //console.log("values => ", values);
+  const [loading, setLoading] = useState(false);
+
+  const onFinish = async (values) => {
+    // console.log("values => ", values);
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8000/api/signup",
+        values
+      );
+      if (data?.error) {
+        toast.error(data.error);
+        setLoading(false);
+      } else {
+        toast.success("Successfully signed up");
+        setLoading(false);
+      }
+    } catch (err) {
+      toast.error("Signup failed. Try again.");
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,7 +43,7 @@ function Signup() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
         >
-          {/* nam */}
+          {/* name */}
           <Form.Item
             name="name"
             rules={[{ required: true, message: "Please input your name!" }]}
@@ -58,6 +77,7 @@ function Signup() {
               type="primary"
               htmlType="submit"
               className="login-form-button"
+              loading={loading}
             >
               Register
             </Button>
