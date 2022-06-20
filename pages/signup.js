@@ -1,29 +1,41 @@
 //send users name, email, password to the back-end and server will  save user information the database.
 //ant design - font/form
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/auth";
+import { useRouter } from "next/router";
 
 function Signup() {
+  // context
+  const [auth, setAuth] = useContext(AuthContext);
+  // hook
+  const router = useRouter();
+  console.log(router);
+  // state
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
     // console.log("values => ", values);
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        "http://localhost:8000/api/signup",
-        values
-      );
+      const { data } = await axios.post(`/signup`, values);
       if (data?.error) {
         toast.error(data.error);
         setLoading(false);
       } else {
+        // console.log("signup response => ", data);
+        // save in context
+        setAuth(data);
+        // save in local storage
+        localStorage.setItem("auth", JSON.stringify(data));
         toast.success("Successfully signed up");
         setLoading(false);
+        // redirect
+        router.push("/admin");
       }
     } catch (err) {
       toast.error("Signup failed. Try again.");
