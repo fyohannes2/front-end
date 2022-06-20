@@ -1,13 +1,30 @@
+import { useState } from "react";
 import { Layout } from "antd";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { Form, Input, Row, Col, Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const { Content, Sider } = Layout;
 
 function Categories() {
+  // state
+  const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
-    console.log("values => ", values);
+    // console.log("values => ", values);
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/category", values);
+      console.log(data);
+      toast.success("Category created successfully");
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      toast.error("Category create failed");
+      setLoading(false);
+    }
   };
   return (
     <AdminLayout>
@@ -24,7 +41,7 @@ function Categories() {
                 placeholder="Give it a name"
               />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Submit
             </Button>
           </Form>
