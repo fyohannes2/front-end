@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Layout } from "antd";
 import AdminLayout from "../../../components/layout/AdminLayout";
-import { Form, Input, Row, Col, Button, List, Modal } from "antd";
+import { Form, Input, Row, Col, Button, List } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import CategoryUpdateModal from "../../../components/modal/CategoryUpdateModal";
 
 const { Content, Sider } = Layout;
 
@@ -64,6 +65,28 @@ function Categories() {
     setVisible(true);
   };
 
+  const handleUpdate = async (values) => {
+    try {
+      const { data } = await axios.put(
+        `/category/${updatingCategory.slug}`,
+        values
+      );
+      const newCategories = categories.map((cat) => {
+        if (cat._id === data._id) {
+          return data;
+        }
+        return cat;
+      });
+      setCategories(newCategories);
+      toast.success("Categrory updated successfully");
+      setVisible(false);
+      setUpdatingCategory({});
+    } catch (err) {
+      console.log(err);
+      toast.error("Category update failed");
+    }
+  };
+
   return (
     <AdminLayout>
       <Row>
@@ -102,14 +125,12 @@ function Categories() {
           ></List>
         </Col>
 
-        <Modal
-          title="Update category"
+        <CategoryUpdateModal
           visible={visible}
-          footer={null}
-          onCancel={() => setVisible(false)}
-        >
-          this is modal
-        </Modal>
+          setVisible={setVisible}
+          handleUpdate={handleUpdate}
+          updatingCategory={updatingCategory}
+        />
       </Row>
     </AdminLayout>
   );
