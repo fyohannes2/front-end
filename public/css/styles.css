@@ -1,4 +1,8 @@
 .active {
-    color: #025127 !important;
-    text-decoration: underline;
-  }
+  color: #1890ff !important;
+  text-decoration: underline;
+}
+.ProseMirror {
+  height: 200px;
+  padding: 15px 25px;
+}
